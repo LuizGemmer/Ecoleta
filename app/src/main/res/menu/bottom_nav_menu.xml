@@ -2,12 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/logo_ecoleta"
-        android:title="home" />
+        android:icon="@drawable/house_solid"
+        android:title="@string/navigation_home" />
     <item
-        android:id="@+id/navigation_dashboard"
-        android:title="a" />
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/magnifying_glass_solid"
+        android:title="@string/navigation_search" />
     <item
-        android:id="@+id/navigation_notifications"
-        android:title="b" />
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/plus_solid"
+        android:title="@string/navigation_add" />
+
+    <item
+        android:id="@+id/navigation_itemType"
+        android:icon="@drawable/sitemap_solid"
+        android:title="@string/navigation_itemType" />
+
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@drawable/user_solid"
+        android:title="@string/navigation_user" />
+
 </menu>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Ecoleta</string>
+
+    <string name="navigation_home">Início</string>
+    <string name="navigation_search">Buscar</string>
+    <string name="navigation_add">Adicionar</string>
+    <string name="navigation_itemType">Items</string>
+    <string name="navigation_user">Usuário</string>
+
 </resources>
