@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984438776549",
+    "project_id": "ecoleta-9c588",
+    "storage_bucket": "ecoleta-9c588.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984438776549:android:d429ffa633b0d99088ea0c",
+        "android_client_info": {
+          "package_name": "br.com.univates.ecoleta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm12duHNPGUquurDD3ubdIQjfQyZ8FPds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
