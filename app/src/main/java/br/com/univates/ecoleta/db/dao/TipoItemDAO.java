@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.DAO;
+package br.com.univates.ecoleta.db.entity.DAO;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.univates.ecoleta.models.TipoItem;
+import br.com.univates.ecoleta.db.entity.TipoItem;
 
 public class TipoItemDAO {
 

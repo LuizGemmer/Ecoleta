@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.models;
+package br.com.univates.ecoleta.db.entity;
 
 public class Coleta {
     public String id;

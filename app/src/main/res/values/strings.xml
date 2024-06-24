@@ -10,5 +10,10 @@
     <string name="navigation_itemType">Items</string>
     <string name="navigation_user">Usuário</string>
     <string name="default_web_client_id" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="solicitar_coleta">Solicitar Coleta</string>
+    <string name="ponto_coleta">Ponto de Coleta</string>
+    <string name="pergunta_cadastro">O que deseja cadastrar?</string>
 
 </resources>

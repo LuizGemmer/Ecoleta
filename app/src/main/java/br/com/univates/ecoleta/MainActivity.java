@@ -7,8 +7,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,16 +26,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         mAuth = FirebaseAuth.getInstance();
+        configureGoogleSignIn();
+        checkCurrentUser();
+    }
 
-        // Configure Google Sign In
+    private void configureGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Set the click listener for the sign-in button
+        findViewById(R.id.signInWithGoogle).setOnClickListener(view -> signIn());
+    }
+
+    private void checkCurrentUser() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             currentUser.getIdToken(true).addOnCompleteListener(task -> {
@@ -46,54 +56,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
-            GoogleSignIn.getSignedInAccountFromIntent(data)
-                    .addOnSuccessListener(googleSignInAccount -> {
-                        firebaseAuthWithGoogle(googleSignInAccount.getIdToken());
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(MainActivity.this, "Google sign in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            if (task.isSuccessful()) {
+                GoogleSignInAccount account = task.getResult();
+                if (account != null) {
+                    firebaseAuthWithGoogle(account.getIdToken());
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "Login usando a conta Google falhou: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success
-                        if (mAuth.getCurrentUser() != null) {
-                            redirectToAnotherActivity();
-                        } else {
-                            Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void redirectToAnotherActivity() {
-        Intent intent = new Intent(this, MainActivityPrincipal.class);
-        startActivity(intent);
-        finish();
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user != null) {
+                    redirectToAnotherActivity();
+                } else {
+                    Toast.makeText(MainActivity.this, "Falha na autenticação", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "Falha na autenticação", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void logoutUser() {
         mAuth.signOut();
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
             Toast.makeText(MainActivity.this, "Usuário deslogado, por favor faça login novamente", Toast.LENGTH_SHORT).show();
-            findViewById(R.id.signInWithGoogle).setOnClickListener(view -> signIn());
         });
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void redirectToAnotherActivity() {
+        Intent intent = new Intent(this, MainActivityPrincipal.class);
+        startActivity(intent);
+        finish();
     }
 }

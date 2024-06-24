@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Ecoleta" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.Ecoleta" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="android:colorBackground">@color/background_grey</item>
         <item name="colorOnBackground">@color/text_dark_purple</item>
@@ -11,9 +11,4 @@
     </style>
 
     <style name="Theme.Ecoleta" parent="Base.Theme.Ecoleta" />
-
-    <style name="UbuntuTextStyle">
-        <item name="android:fontFamily">@font/ubuntu_font</item>
-        <item name="android:textSize">40sp</item>
-    </style>
 </resources>

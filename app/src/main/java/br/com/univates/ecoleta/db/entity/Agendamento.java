@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.models;
+package br.com.univates.ecoleta.db.entity;
 import java.util.Date;
 
 public class Agendamento {
