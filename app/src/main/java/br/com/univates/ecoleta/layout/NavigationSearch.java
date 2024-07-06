@@ -142,15 +142,17 @@ public class NavigationSearch extends Fragment implements MapListener {
             @Override
             public void run() {
                 List<GeoLocationResponseDto> responseList = geoLocationService.findGeoCodeAddres(dto);
-                requireActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (responseList != null && !responseList.isEmpty()) {
-                            GeoPoint geoPoint = new GeoPoint(responseList.get(0).getLatitude(), responseList.get(0).getLongitude());
-                            addMarker(geoPoint, responseList.get(0).getName(), responseList.get(0).getDisplayName());
+                if (isAdded() && getActivity() != null) {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (responseList != null && !responseList.isEmpty()) {
+                                GeoPoint geoPoint = new GeoPoint(responseList.get(0).getLatitude(), responseList.get(0).getLongitude());
+                                addMarker(geoPoint, responseList.get(0).getName(), responseList.get(0).getDisplayName());
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
     }
