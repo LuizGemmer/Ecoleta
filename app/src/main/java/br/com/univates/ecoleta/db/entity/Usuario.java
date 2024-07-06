@@ -5,8 +5,10 @@ import java.util.List;
 
 import br.com.univates.ecoleta.db.type.TipoLocalizacaoType;
 
-public class Coleta {
+public class Usuario {
     public String id;
+    public String nome;
+    public String email;
     public TipoLocalizacaoType tipoLocalizacao;
     public List<TipoMaterial> listaTipoMateriais;
     public double longitude;
@@ -25,7 +27,7 @@ public class Coleta {
     public String descricao;
 
     // Constructor (empty for Firestore)
-    public Coleta() {}
+    public Usuario() {}
 
     public String getId() {
         return id;
@@ -161,5 +163,21 @@ public class Coleta {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

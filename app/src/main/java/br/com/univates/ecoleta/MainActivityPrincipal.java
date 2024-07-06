@@ -23,7 +23,6 @@ public class MainActivityPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         replaceFragment(new NavigationHome());
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();

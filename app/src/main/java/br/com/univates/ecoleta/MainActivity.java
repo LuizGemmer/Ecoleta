@@ -11,21 +11,33 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import br.com.univates.ecoleta.db.entity.Usuario;
+import br.com.univates.ecoleta.db.service.UsuarioService;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private UsuarioService usuarioService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        FirebaseApp.initializeApp(this);
+        usuarioService = new UsuarioService();
         mAuth = FirebaseAuth.getInstance();
         configureGoogleSignIn();
         checkCurrentUser();
@@ -38,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // Set the click listener for the sign-in button
         findViewById(R.id.signInWithGoogle).setOnClickListener(view -> signIn());
     }
 
@@ -78,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
+                    saveUserToFirestore(user);
                     redirectToAnotherActivity();
                 } else {
                     Toast.makeText(MainActivity.this, "Falha na autenticação", Toast.LENGTH_SHORT).show();
@@ -86,6 +97,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Falha na autenticação", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveUserToFirestore(FirebaseUser firebaseUser) {
+        Usuario user = new Usuario();
+        user.setId(firebaseUser.getUid());
+        user.setNome(firebaseUser.getDisplayName());
+        user.setEmail(firebaseUser.getEmail());
+        user.setUrlFoto(firebaseUser.getPhotoUrl().toString());
+        usuarioService.save(user);
     }
 
     private void logoutUser() {

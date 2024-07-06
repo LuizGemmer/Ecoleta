@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.univates.ecoleta.db.entity.Coleta;
+import br.com.univates.ecoleta.db.entity.Usuario;
 
 public class ColetaDAO {
 
@@ -26,11 +26,11 @@ public class ColetaDAO {
         return databaseReference.push().getKey();
     }
 
-    public static void salvar(Coleta coleta) {
+    public static void salvar(Usuario coleta) {
         databaseReference.child(coleta.getId()).setValue(coleta);
     }
 
-    public static void atualizar(Coleta coleta) {
+    public static void atualizar(Usuario coleta) {
         databaseReference.child(coleta.getId()).setValue(coleta);
     }
 
@@ -57,9 +57,9 @@ public class ColetaDAO {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Coleta> listaColetas = new ArrayList<>();
+                List<Usuario> listaColetas = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Coleta coleta = snapshot.getValue(Coleta.class);
+                    Usuario coleta = snapshot.getValue(Usuario.class);
                     listaColetas.add(coleta);
                 }
                 listener.onColetasCarregadas(listaColetas);
@@ -73,7 +73,7 @@ public class ColetaDAO {
     }
 
     public interface OnColetasCarregadasListener {
-        void onColetasCarregadas(List<Coleta> coletas);
+        void onColetasCarregadas(List<Usuario> coletas);
     }
 
     public interface OnColetaRemovidaListener {
