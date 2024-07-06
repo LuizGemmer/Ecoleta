@@ -1,5 +1,6 @@
 package br.com.univates.ecoleta.layout;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,19 +14,11 @@ import br.com.univates.ecoleta.R;
 
 public class NavigationAdd extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     public NavigationAdd() {}
 
-    public static NavigationAdd newInstance(String param1, String param2) {
+    public static NavigationAdd newInstance() {
         NavigationAdd fragment = new NavigationAdd();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,10 +26,6 @@ public class NavigationAdd extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -44,5 +33,18 @@ public class NavigationAdd extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.navigation_add, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.btnGpsPontoColeta).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewPontoColeta.class);
+                startActivity(intent);
+            }
+        });
     }
 }

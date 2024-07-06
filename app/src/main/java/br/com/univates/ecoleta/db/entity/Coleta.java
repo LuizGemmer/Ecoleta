@@ -1,9 +1,14 @@
 package br.com.univates.ecoleta.db.entity;
 
+import java.util.Calendar;
+import java.util.List;
+
+import br.com.univates.ecoleta.db.type.TipoLocalizacaoType;
+
 public class Coleta {
     public String id;
-    public String tipoLocalizacao;
-    public String tipoColeta;
+    public TipoLocalizacaoType tipoLocalizacao;
+    public List<TipoMaterial> listaTipoMateriais;
     public double longitude;
     public double latitude;
     public String cep;
@@ -13,6 +18,11 @@ public class Coleta {
     public String bairro;
     public String complemento;
     public String ibge;
+    public String numero;
+    public String urlFoto;
+    public String queColetar;
+    public Calendar horarioColeta;
+    public String descricao;
 
     // Constructor (empty for Firestore)
     public Coleta() {}
@@ -25,20 +35,20 @@ public class Coleta {
         this.id = id;
     }
 
-    public String getTipoLocalizacao() {
+    public TipoLocalizacaoType getTipoLocalizacao() {
         return tipoLocalizacao;
     }
 
-    public void setTipoLocalizacao(String tipoLocalizacao) {
+    public void setTipoLocalizacao(TipoLocalizacaoType tipoLocalizacao) {
         this.tipoLocalizacao = tipoLocalizacao;
     }
 
-    public String getTipoColeta() {
-        return tipoColeta;
+    public List<TipoMaterial> getListaTipoMateriais() {
+        return listaTipoMateriais;
     }
 
-    public void setTipoColeta(String tipoColeta) {
-        this.tipoColeta = tipoColeta;
+    public void setListaTipoMateriais(List<TipoMaterial> listaTipoMateriais) {
+        this.listaTipoMateriais = listaTipoMateriais;
     }
 
     public double getLongitude() {
@@ -111,5 +121,45 @@ public class Coleta {
 
     public void setIbge(String ibge) {
         this.ibge = ibge;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
+    public String getQueColetar() {
+        return queColetar;
+    }
+
+    public void setQueColetar(String queColetar) {
+        this.queColetar = queColetar;
+    }
+
+    public Calendar getHorarioColeta() {
+        return horarioColeta;
+    }
+
+    public void setHorarioColeta(Calendar horarioColeta) {
+        this.horarioColeta = horarioColeta;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

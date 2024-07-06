@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnPontoColeta"
+        android:id="@+id/btnGpsPontoColeta"
         android:layout_width="258dp"
         android:layout_height="74dp"
         android:layout_marginTop="316dp"

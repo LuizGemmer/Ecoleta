@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.db.entity.DAO;
+package br.com.univates.ecoleta.db.dao;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

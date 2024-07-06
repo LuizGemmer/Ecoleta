@@ -50,4 +50,9 @@ dependencies {
     implementation(platform(libs.firebase.bom.v3280))
     implementation(libs.com.google.firebase.firebase.auth)
     implementation(libs.play.services.auth)
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation (libs.osmdroid.android.v6114)
+    implementation (libs.okhttp)
+    implementation (libs.gson.v288)
 }
