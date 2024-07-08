@@ -1,6 +1,8 @@
 package br.com.univates.ecoleta.db.entity;
 
-public class TipoItem {
+import java.io.Serializable;
+
+public class TipoItem implements Serializable {
     String id;
     String nome;
     String tipo;

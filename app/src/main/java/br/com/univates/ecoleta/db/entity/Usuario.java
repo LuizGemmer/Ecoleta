@@ -1,11 +1,14 @@
 package br.com.univates.ecoleta.db.entity;
 
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
 import br.com.univates.ecoleta.db.type.TipoLocalizacaoType;
 
-public class Usuario {
+public class Usuario implements Serializable {
     public String id;
     public String nome;
     public String email;
@@ -179,5 +182,14 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Usuario convertFromFirebaseUser(FirebaseUser firebaseUser) {
+        Usuario user = new Usuario();
+        user.setId(firebaseUser.getUid());
+        user.setNome(firebaseUser.getDisplayName());
+        user.setEmail(firebaseUser.getEmail());
+        user.setUrlFoto(firebaseUser.getPhotoUrl().toString());
+        return user;
     }
 }

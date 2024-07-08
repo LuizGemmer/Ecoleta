@@ -11,8 +11,7 @@
 
     <item
         android:id="@+id/navigation_add"
-        android:title=""
-        android:enabled="true"/>
+        android:title=""/>
 
     <item
         android:id="@+id/navigation_itemType"

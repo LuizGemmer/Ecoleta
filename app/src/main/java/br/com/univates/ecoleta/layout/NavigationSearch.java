@@ -168,7 +168,7 @@ public class NavigationSearch extends Fragment implements MapListener {
                         if (myLocation != null) {
                             mapController.setCenter(myLocation);
                             mapController.animateTo(myLocation);
-                            addMarker(myLocation, "Você está aqui!", "");
+                            //addMarker(myLocation, "Você está aqui!", "");
                         }
                     }
                 });

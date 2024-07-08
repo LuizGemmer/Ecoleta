@@ -1,17 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_grey"
     tools:context=".layout.NewPontoColeta">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="New Ponto Coleta"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
+        android:orientation="vertical"
+        android:layout_marginTop="65dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/novo_ponto_de_coleta"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:ignore="MissingClass">
+
+    <Button
+        android:id="@+id/btnUseCurrentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/usar_localizacao_atual"
+        android:textColor="@color/black"
+        android:backgroundTint="#00C853"
+        app:icon="@drawable/location_dot_solid"
+        app:iconPadding="10dp"
+        app:iconSize="25dp"
+        app:iconTint="@color/black"
+        android:fontFamily="@font/ubuntu_bold"
+        android:padding="12dp"
+        android:drawablePadding="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ou"
+        android:textSize="16sp"
+        android:textColor="#3E3E3E"
+        android:gravity="center"
+        android:padding="8dp" />
+
+        <com.santalu.maskara.widget.MaskEditText
+            android:id="@+id/editTextCep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#D3D3D3"
+            android:hint="@string/cep"
+            android:inputType="number"
+            app:mask="#####-###"
+            app:maskCharacter="#"
+            app:maskStyle="completable" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:weightSum="3">
+
+    <EditText
+        android:id="@+id/editTextEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/estado"
+        android:backgroundTint="#D3D3D3"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="2"
+        android:singleLine="true"
+        android:inputType="textCapCharacters"/>
+
+    <EditText
+        android:id="@+id/editTextCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cidade"
+        android:backgroundTint="#D3D3D3"
+        android:padding="12dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp"
+        android:singleLine="true"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextBairro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/bairro"
+        android:backgroundTint="#D3D3D3"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:singleLine="true"/>
+
+    <EditText
+        android:id="@+id/editTextLogradouro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/logradouro"
+        android:backgroundTint="#D3D3D3"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:singleLine="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/editTextNumero"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/numero"
+                android:backgroundTint="#D3D3D3"
+                android:padding="12dp"
+                android:layout_marginEnd="4dp"
+                android:singleLine="true"/>
+
+            <EditText
+                android:id="@+id/editTextComplemento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="@string/complemento"
+                android:backgroundTint="#D3D3D3"
+                android:padding="12dp"
+                android:layout_marginStart="4dp"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00C853"
+            android:fontFamily="@font/ubuntu_bold"
+            android:padding="15dp"
+            android:paddingBottom="0dp"
+            android:text="@string/avancar"
+            android:id="@+id/btnNewPontoColetaAvancar"
+            android:textColor="@color/black" />
+
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

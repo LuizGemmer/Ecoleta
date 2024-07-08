@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.univates.ecoleta.R;
+import br.com.univates.ecoleta.utils.EcoletaUtils;
 
 
 public class NavigationAdd extends Fragment {
@@ -33,26 +34,24 @@ public class NavigationAdd extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.navigation_add, container, false);
 
         view.findViewById(R.id.btnCadPontoColeta).setOnClickListener(v -> {
-            replaceFragment(new NewPontoColeta());
+            replaceFragment(new NewPontoColeta(),true);
         });
 
-        view.findViewById(R.id.btnSolicitarColeta).setOnClickListener(v -> {
-
-        });
+        view.findViewById(R.id.btnSolicitarColeta).setOnClickListener(v -> {});
         
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getParentFragmentManager();
+    private void replaceFragment(Fragment fragment, boolean addToBackStack) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        // ao adicionar uma nova tela sempre chamar o bottomFragment da MainActivityPrincipal
-        transaction.replace(R.id.bottomFragment, fragment);
-        transaction.addToBackStack(null);
+        transaction.replace(R.id.fragmentPrincipal, fragment);
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
     }
 

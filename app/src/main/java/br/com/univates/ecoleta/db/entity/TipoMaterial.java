@@ -1,6 +1,8 @@
 package br.com.univates.ecoleta.db.entity;
 
-public class TipoMaterial {
+import java.io.Serializable;
+
+public class TipoMaterial implements Serializable {
 
     private String id;
     private String icone;

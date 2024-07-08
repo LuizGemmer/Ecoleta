@@ -24,6 +24,7 @@ import java.util.Map;
 
 import br.com.univates.ecoleta.db.entity.Usuario;
 import br.com.univates.ecoleta.db.service.UsuarioService;
+import br.com.univates.ecoleta.layout.NewPontoColetaFinal;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,11 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveUserToFirestore(FirebaseUser firebaseUser) {
-        Usuario user = new Usuario();
-        user.setId(firebaseUser.getUid());
-        user.setNome(firebaseUser.getDisplayName());
-        user.setEmail(firebaseUser.getEmail());
-        user.setUrlFoto(firebaseUser.getPhotoUrl().toString());
+        Usuario user = new Usuario().convertFromFirebaseUser(firebaseUser);
         usuarioService.save(user);
     }
 
@@ -125,4 +122,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

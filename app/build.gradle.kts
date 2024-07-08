@@ -34,6 +34,7 @@ android {
     buildFeatures {
         viewBinding = true;
     }
+
 }
 
 dependencies {
@@ -45,6 +46,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -56,4 +58,6 @@ dependencies {
     implementation (libs.osmdroid.android.v6114)
     implementation (libs.okhttp)
     implementation (libs.gson.v288)
+    implementation (libs.maskara)
+    implementation (libs.material.v1120)
 }

@@ -16,5 +16,16 @@
     <string name="ponto_coleta">Ponto de Coleta</string>
     <string name="pergunta_cadastro">O que deseja cadastrar?</string>
     <string name="localizacao">Localização:</string>
+    <string name="novo_ponto_de_coleta">Novo Ponto de Coleta</string>
+    <string name="usar_localizacao_atual">Usar Localização Atual</string>
+    <string name="ou">Ou</string>
+    <string name="cep">Código Postal (Cep)</string>
+    <string name="estado">Estado</string>
+    <string name="cidade">Cidade</string>
+    <string name="bairro">Bairro</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="numero">Número</string>
+    <string name="complemento">Complemento</string>
+    <string name="avancar">Avançar</string>
 
 </resources>

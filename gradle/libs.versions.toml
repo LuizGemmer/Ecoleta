@@ -13,12 +13,17 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
+maskara = "1.0.0"
+maskededittext = "1.0.5"
+maskededittextVersion = "1.0.5"
+maskEdittext = "1.1.1"
 material = "1.10.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
 googleGmsGoogleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
 firebaseAuth = "23.0.0"
+materialVersion = "1.12.0"
 okhttp = "4.9.1"
 osmdroidAndroid = "6.2.3"
 osmdroidAndroidVersion = "6.1.14"
@@ -33,6 +38,7 @@ firebaseFirestore = "25.0.0"
 com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+egslava-maskededittext = { module = "ru.egslava:MaskedEditText", version.ref = "maskededittextVersion" }
 facebook-android-sdk = { module = "com.facebook.android:facebook-android-sdk", version.ref = "facebookAndroidSdk" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-bom-v3280 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
@@ -45,11 +51,15 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+mask-edittext = { module = "com.github.santalu:mask-edittext", version.ref = "maskEdittext" }
+maskara = { module = "com.github.santalu:maskara", version.ref = "maskara" }
+maskededittext = { module = "com.vicmikhailau:MaskedEditText", version.ref = "maskededittext" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 osmdroid-android = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroidAndroid" }
 osmdroid-android-v6114 = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroidAndroidVersion" }
