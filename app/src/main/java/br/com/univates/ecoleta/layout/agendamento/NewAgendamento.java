@@ -95,6 +95,8 @@ public class NewAgendamento extends Fragment {
         editTextDate = view.findViewById(R.id.editTextDate);
         textViewHeader.setText("Nova Coleta");
         editTextDate.setVisibility(View.VISIBLE);
+
+        editTextDate.setText(EcoletaUtils.getCurrentDate());
         Button btnAvancar = view.findViewById(R.id.btnNewPontoColetaAvancar);
         btnAvancar.setText("Finalizar");
     }

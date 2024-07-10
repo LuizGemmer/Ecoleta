@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import br.com.univates.ecoleta.R;
 import br.com.univates.ecoleta.db.entity.Coleta;
+import br.com.univates.ecoleta.db.entity.ColetaType;
 import br.com.univates.ecoleta.db.service.ColetaService;
 import br.com.univates.ecoleta.layout.agendamento.AgendamentoAdapter;
 import br.com.univates.ecoleta.layout.agendamento.AgendamentoEditModal;
@@ -66,7 +68,7 @@ public class NavigationHome extends Fragment implements AgendamentoEditModal.OnC
 
     private void openEditModal(Coleta coleta) {
         AgendamentoEditModal modalFragment = new AgendamentoEditModal(coleta, coletaService);
-        modalFragment.setTargetFragment(this, 0); // Configurar o fragmento pai como alvo para receber resultados
+        modalFragment.setTargetFragment(this, 0);
         modalFragment.show(getParentFragmentManager(), "EditColetaModal");
     }
 
@@ -74,7 +76,7 @@ public class NavigationHome extends Fragment implements AgendamentoEditModal.OnC
     private void loadColetaList() {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            List<Coleta> listaPontosColeta = coletaService.findAll();
+            List<Coleta> listaPontosColeta = coletaService.findAll().stream().filter(e -> e.getTipoColeta() == ColetaType.COLETA).collect(Collectors.toList());
             requireActivity().runOnUiThread(() -> {
                 coletaList.clear();
                 coletaList.addAll(listaPontosColeta);

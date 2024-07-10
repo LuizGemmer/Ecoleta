@@ -1,5 +1,6 @@
 package br.com.univates.ecoleta.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import br.com.univates.ecoleta.MainActivityPrincipal;
 import br.com.univates.ecoleta.R;
@@ -60,5 +63,11 @@ public class EcoletaUtils {
         }
 
         return null;
+    }
+
+    public static String getCurrentDate() {
+        Date now = new Date();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(now);
     }
 }
