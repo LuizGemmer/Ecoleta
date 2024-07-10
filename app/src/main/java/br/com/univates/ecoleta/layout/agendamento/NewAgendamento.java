@@ -1,24 +1,22 @@
-package br.com.univates.ecoleta.layout;
+package br.com.univates.ecoleta.layout.agendamento;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -34,12 +32,15 @@ import java.util.concurrent.Executors;
 
 import br.com.univates.ecoleta.R;
 import br.com.univates.ecoleta.db.entity.Coleta;
+import br.com.univates.ecoleta.db.entity.ColetaType;
 import br.com.univates.ecoleta.db.entity.Usuario;
 import br.com.univates.ecoleta.db.entity.dto.ViaCepResponseDto;
 import br.com.univates.ecoleta.db.rest.ViaCepExecutor;
+import br.com.univates.ecoleta.db.service.ColetaService;
+import br.com.univates.ecoleta.layout.navigation.NavigationHome;
 import br.com.univates.ecoleta.utils.EcoletaUtils;
 
-public class NewPontoColeta extends Fragment {
+public class NewAgendamento extends Fragment {
 
     private EditText cepEditText, estadoEditText, cidadeEditText, bairroEditText, logradouroEditText, numeroEditText, complementoEditText;
     private ViaCepExecutor viaCepExecutor;
@@ -49,15 +50,10 @@ public class NewPontoColeta extends Fragment {
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationRequest locationRequest;
+    private EditText editTextDate;
+    private ColetaService coletaService;
 
-    public NewPontoColeta() {
-    }
-
-    public static NewPontoColeta newInstance() {
-        NewPontoColeta fragment = new NewPontoColeta();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public NewAgendamento() {
     }
 
     @Override
@@ -69,6 +65,7 @@ public class NewPontoColeta extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
         locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,10000).build();
+        coletaService = new ColetaService();
     }
 
     @Override
@@ -76,13 +73,7 @@ public class NewPontoColeta extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_ponto_coleta, container, false);
 
-        cepEditText = view.findViewById(R.id.editTextCep);
-        estadoEditText = view.findViewById(R.id.editTextEstado);
-        cidadeEditText = view.findViewById(R.id.editTextCidade);
-        bairroEditText = view.findViewById(R.id.editTextBairro);
-        logradouroEditText = view.findViewById(R.id.editTextLogradouro);
-        numeroEditText = view.findViewById(R.id.editTextNumero);
-        complementoEditText = view.findViewById(R.id.editTextComplemento);
+        init(view);
 
         // Ações da tela
         focusChangeCepEditText(cepEditText);
@@ -90,6 +81,22 @@ public class NewPontoColeta extends Fragment {
         buttonClickAvancar(view);
 
         return view;
+    }
+
+    private void init(View view) {
+        cepEditText = view.findViewById(R.id.editTextCep);
+        estadoEditText = view.findViewById(R.id.editTextEstado);
+        cidadeEditText = view.findViewById(R.id.editTextCidade);
+        bairroEditText = view.findViewById(R.id.editTextBairro);
+        logradouroEditText = view.findViewById(R.id.editTextLogradouro);
+        numeroEditText = view.findViewById(R.id.editTextNumero);
+        complementoEditText = view.findViewById(R.id.editTextComplemento);
+        TextView textViewHeader = view.findViewById(R.id.textViewHeader);
+        editTextDate = view.findViewById(R.id.editTextDate);
+        textViewHeader.setText("Nova Coleta");
+        editTextDate.setVisibility(View.VISIBLE);
+        Button btnAvancar = view.findViewById(R.id.btnNewPontoColetaAvancar);
+        btnAvancar.setText("Finalizar");
     }
 
     private void buttonClickAvancar(View view) {
@@ -169,16 +176,19 @@ public class NewPontoColeta extends Fragment {
         pontoColeta.setLogradouro(logradouroEditText.getText().toString());
         pontoColeta.setNumero(numeroEditText.getText().toString());
         pontoColeta.setComplemento(complementoEditText.getText().toString());
+        pontoColeta.setHorarioAtendimento(editTextDate.getText().toString());
         pontoColeta.setUsuario(new Usuario().convertFromFirebaseUser(Objects.requireNonNull(mAuth.getCurrentUser())));
+        pontoColeta.setTipoColeta(ColetaType.COLETA);
         pontoColeta.setLatitude(latitude);
         pontoColeta.setLongitude(longitude);
 
-        NewPontoColetaFinal fragment = new NewPontoColetaFinal();
-        Bundle args = new Bundle();
-        args.putSerializable("pontoColeta", pontoColeta);
-        fragment.setArguments(args);
-
-        EcoletaUtils.replaceFragment(NewPontoColetaFinal.class, true, requireActivity().getSupportFragmentManager());
+        try {
+            coletaService.save(pontoColeta);
+            Toast.makeText(requireActivity(), "Cadastro Ponto Coleta realizado com sucesso", Toast.LENGTH_SHORT).show();
+            EcoletaUtils.replaceFragment(NavigationHome.class, false, requireActivity().getSupportFragmentManager(),true);
+        }catch (Exception e) {
+            Toast.makeText(requireActivity(), "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void clearEditText() {
@@ -188,6 +198,7 @@ public class NewPontoColeta extends Fragment {
         logradouroEditText.setText("");
         complementoEditText.setText("");
         numeroEditText.setText("");
+        editTextDate.setText("");
     }
 
     @Override

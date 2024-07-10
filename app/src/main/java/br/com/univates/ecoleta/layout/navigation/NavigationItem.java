@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.layout;
+package br.com.univates.ecoleta.layout.navigation;
 
 import android.os.Bundle;
 
@@ -10,16 +10,9 @@ import android.view.ViewGroup;
 
 import br.com.univates.ecoleta.R;
 
-public class NavigationHome extends Fragment {
+public class NavigationItem extends Fragment {
 
-    public NavigationHome() {}
-
-    public static NavigationHome newInstance(String param1, String param2) {
-        NavigationHome fragment = new NavigationHome();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public NavigationItem() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +22,6 @@ public class NavigationHome extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.navigation_home, container, false);
+        return inflater.inflate(R.layout.navigation_item, container, false);
     }
 }

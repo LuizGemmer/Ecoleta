@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_grey"
-    tools:context=".layout.NewPontoColetaFinal">
+    tools:context=".layout.ponto_coleta.NewPontoColetaFinal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutFinal"
@@ -66,7 +66,7 @@
                 android:id="@+id/imagePicker"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:contentDescription="teste"
+                android:paddingTop="8dp"
                 android:src="@drawable/baseline_camera_alt_96"
                 android:visibility="visible"
                 app:tint="@android:color/white" />
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:text="Tire uma foto do ponto de coleta"
+                android:text="@string/tire_uma_foto_do_ponto_de_coleta"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
@@ -110,6 +110,85 @@
                 android:textColor="@android:color/white" />
 
         </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutFinal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagePickerLayout"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@string/sobre"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@string/conte_mais_sobre_o_local"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextQueColeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#D3D3D3"
+                android:hint="@string/o_que_coleta"
+                android:padding="12dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/editTextHorariosAtendimento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#D3D3D3"
+                android:hint="@string/horarios_de_atendimento_opcional"
+                android:padding="12dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/editTextDescricaoColeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#D3D3D3"
+                android:hint="@string/descri_o"
+                android:padding="12dp"
+                android:singleLine="true" />
+
+            <!-- Avançar Button -->
+            <Button
+                android:id="@+id/btnNewPontoColetaFinalizar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#00C853"
+                android:fontFamily="@font/ubuntu_bold"
+                android:padding="15dp"
+                android:text="@string/finalizar"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

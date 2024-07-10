@@ -2,21 +2,17 @@ package br.com.univates.ecoleta;
 
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.util.List;
-
 import br.com.univates.ecoleta.databinding.ActivityMainBinding;
-import br.com.univates.ecoleta.layout.NavigationAdd;
-import br.com.univates.ecoleta.layout.NavigationHome;
-import br.com.univates.ecoleta.layout.NavigationItem;
-import br.com.univates.ecoleta.layout.NavigationSearch;
-import br.com.univates.ecoleta.layout.NavigationUser;
-import br.com.univates.ecoleta.layout.NewPontoColetaFinal;
+import br.com.univates.ecoleta.layout.navigation.NavigationAdd;
+import br.com.univates.ecoleta.layout.navigation.NavigationHome;
+import br.com.univates.ecoleta.layout.navigation.NavigationItem;
+import br.com.univates.ecoleta.layout.navigation.NavigationSearch;
+import br.com.univates.ecoleta.layout.navigation.NavigationUser;
 import br.com.univates.ecoleta.utils.EcoletaUtils;
 
 public class MainActivityPrincipal extends AppCompatActivity {
@@ -57,7 +53,7 @@ public class MainActivityPrincipal extends AppCompatActivity {
     }
 
     public <T extends Fragment> void replaceFragment(Class<T> fragmentClass) {
-        EcoletaUtils.replaceFragment(fragmentClass, true, getSupportFragmentManager());
+        EcoletaUtils.replaceFragment(fragmentClass, true, getSupportFragmentManager(),false);
     }
 
     @Override

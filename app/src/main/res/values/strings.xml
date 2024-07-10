@@ -27,5 +27,16 @@
     <string name="numero">Número</string>
     <string name="complemento">Complemento</string>
     <string name="avancar">Avançar</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="descri_o">Descrição</string>
+    <string name="horarios_de_atendimento_opcional">Horários de atendimento (opcional)</string>
+    <string name="o_que_coleta">O que coleta</string>
+    <string name="conte_mais_sobre_o_local">Conte mais sobre o local</string>
+    <string name="sobre">Sobre</string>
+    <string name="tire_uma_foto_do_ponto_de_coleta">Tire uma foto do ponto de coleta</string>
+    <string name="deletar">Deletar</string>
+    <string name="agendamento_coleta">Agendamentos de Coleta</string>
+    <string name="nova_data_de_atendimento">Nova data de atendimento</string>
+    <string name="salvar">Salvar</string>
 
 </resources>

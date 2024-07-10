@@ -11,26 +11,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 
+import br.com.univates.ecoleta.db.entity.Coleta;
 import br.com.univates.ecoleta.db.entity.Usuario;
 
 public class ColetaDAO {
 
-    private static DatabaseReference databaseReference;
-
-    public ColetaDAO() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("coletas");
-    }
+    private static final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("coletas");
 
     public static String getNextId() {
         return databaseReference.push().getKey();
     }
 
-    public static void salvar(Usuario coleta) {
+    public static void salvar(Coleta coleta) {
+        if(coleta.getId() == null)
+            coleta.setId(getNextId());
+
         databaseReference.child(coleta.getId()).setValue(coleta);
     }
 
-    public static void atualizar(Usuario coleta) {
+    public static void atualizar(Coleta coleta) {
         databaseReference.child(coleta.getId()).setValue(coleta);
     }
 
@@ -38,46 +41,63 @@ public class ColetaDAO {
         databaseReference.child(idColeta).removeValue();
     }
 
+    public Coleta findById(String idColeta) {
+        final Coleta[] coleta = new Coleta[1];
+        final CountDownLatch latch = new CountDownLatch(1);
 
-    public void remover(String id, final OnColetaRemovidaListener listener) {
-        databaseReference.child(id).removeValue(new DatabaseReference.CompletionListener() {
+        databaseReference.child(idColeta).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                if (error == null) {
-                    listener.onColetaRemovida(true); // Remoção bem-sucedida
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChildren()){
+                    coleta[0] = dataSnapshot.getValue(Coleta.class);
+                    if (coleta[0] != null) {
+                        coleta[0].setId(dataSnapshot.getKey());
+                    }
+                    latch.countDown();
                 } else {
-                    listener.onColetaRemovida(false); // Erro ao remover
+                    coleta[0] = null;
                 }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                latch.countDown();
             }
         });
+
+        try {
+            latch.await();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return coleta[0];
     }
 
-    public static void listar(final OnColetasCarregadasListener listener) {
-        // Adiciona um listener para recuperar os dados do nó "coletas"
-        databaseReference.addValueEventListener(new ValueEventListener() {
+    public List<Coleta> findAll() throws ExecutionException, InterruptedException {
+        CompletableFuture<List<Coleta>> future = new CompletableFuture<>();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Usuario> listaColetas = new ArrayList<>();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Coleta> coletas = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Usuario coleta = snapshot.getValue(Usuario.class);
-                    listaColetas.add(coleta);
+                    Coleta coleta = snapshot.getValue(Coleta.class);
+                    if (coleta != null) {
+                        coleta.setId(snapshot.getKey());
+                        coletas.add(coleta);
+                    }
                 }
-                listener.onColetasCarregadas(listaColetas);
+                future.complete(coletas);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Tratamento de erro
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                future.completeExceptionally(databaseError.toException());
             }
         });
-    }
 
-    public interface OnColetasCarregadasListener {
-        void onColetasCarregadas(List<Usuario> coletas);
+        return future.get();
     }
-
-    public interface OnColetaRemovidaListener {
-        void onColetaRemovida(boolean sucesso);
-    }
-
 }

@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 public class Coleta implements Serializable {
 
-    private String idColeta;
+    private String id;
 
     private String imagem;
     private String nome;
     private String descricao;
     private String horarioAtendimento;
+    private String queColeta;
 
     //cordenadas
     private double latitude;
@@ -28,12 +29,22 @@ public class Coleta implements Serializable {
     private String uf;
     private ColetaType tipoColeta;
 
-    public String getIdColeta() {
-        return idColeta;
+    public Coleta(String code, String logradouro, String dataAtendimento) {
+        this.id = code;
+        this.logradouro = logradouro;
+        this.horarioAtendimento = dataAtendimento;
     }
 
-    public void setIdColeta(String idColeta) {
-        this.idColeta = idColeta;
+    public Coleta() {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImagem() {
@@ -154,5 +165,13 @@ public class Coleta implements Serializable {
 
     public void setTipoColeta(ColetaType tipoColeta) {
         this.tipoColeta = tipoColeta;
+    }
+
+    public String getQueColeta() {
+        return queColeta;
+    }
+
+    public void setQueColeta(String queColeta) {
+        this.queColeta = queColeta;
     }
 }

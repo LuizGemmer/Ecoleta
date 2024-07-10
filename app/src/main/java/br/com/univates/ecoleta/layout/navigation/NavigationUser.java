@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.layout;
+package br.com.univates.ecoleta.layout.navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,33 +16,28 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 import br.com.univates.ecoleta.MainActivity;
-import br.com.univates.ecoleta.MainActivityPrincipal;
 import br.com.univates.ecoleta.R;
+import br.com.univates.ecoleta.utils.EcoletaUtils;
 
 public class NavigationUser extends Fragment {
 
     private FirebaseAuth mAuth;
 
     public NavigationUser() {}
-    public static NavigationUser newInstance() {
-        NavigationUser fragment = new NavigationUser();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.navigation_user, container, false);
-
-        mAuth = FirebaseAuth.getInstance();
 
         ImageView profileImageView = view.findViewById(R.id.profile_image);
         TextView emailTextView = view.findViewById(R.id.email_text_view);
@@ -65,9 +60,10 @@ public class NavigationUser extends Fragment {
 
         logoutButton.setOnClickListener(v -> {
             mAuth.signOut();
+            EcoletaUtils.redirectToAnotherActivity(requireActivity(), MainActivity.class);
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
-            getActivity().finish();
+            requireActivity().finish();
         });
 
         return view;

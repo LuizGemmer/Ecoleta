@@ -1,4 +1,4 @@
-package br.com.univates.ecoleta.layout;
+package br.com.univates.ecoleta.layout.navigation;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -28,10 +28,14 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import br.com.univates.ecoleta.R;
+import br.com.univates.ecoleta.db.entity.Coleta;
+import br.com.univates.ecoleta.db.entity.ColetaType;
 import br.com.univates.ecoleta.db.entity.dto.GeoLocationDto;
 import br.com.univates.ecoleta.db.entity.dto.GeoLocationResponseDto;
+import br.com.univates.ecoleta.db.service.ColetaService;
 import br.com.univates.ecoleta.db.service.GeoLocationService;
 
 public class NavigationSearch extends Fragment implements MapListener {
@@ -39,37 +43,33 @@ public class NavigationSearch extends Fragment implements MapListener {
     private MapView mapView;
     private IMapController mapController;
     private MyLocationNewOverlay myLocationOverlay;
+    private GeoLocationService geoLocationService;
+    private ColetaService coletaService;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
 
-    private final GeoLocationService geoLocationService = new GeoLocationService();
 
     public NavigationSearch() {}
-
-    public static NavigationSearch newInstance() {
-        NavigationSearch fragment = new NavigationSearch();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Configuration.getInstance().setUserAgentValue("br.com.univates.ecoleta");
+        geoLocationService = new GeoLocationService();
+        coletaService = new ColetaService();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.navigation_search, container, false);
+        View view = inflater.inflate(R.layout.navigation_search, container, false);
 
         if (!checkLocationPermissions()) {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         }
 
         // Initialize the map view
-        mapView = rootView.findViewById(R.id.mapView);
+        mapView = view.findViewById(R.id.mapView);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
 
@@ -88,7 +88,7 @@ public class NavigationSearch extends Fragment implements MapListener {
         addPointsColetas();
         addMyLocation();
 
-        return rootView;
+        return view;
     }
 
     private void addMarker(GeoPoint point, String title, String description) {
@@ -131,31 +131,45 @@ public class NavigationSearch extends Fragment implements MapListener {
     }
 
     private void addPointsColetas() {
-        // Example address
-        GeoLocationDto dto = new GeoLocationDto();
-        dto.setStreetAddress("Av. Cristiano Dexheimer".replaceAll(" ", "+"));
-        dto.setCity("Lajeado".replaceAll(" ", "+"));
-        dto.setState("RS".replaceAll(" ", "+"));
-
         Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                List<GeoLocationResponseDto> responseList = geoLocationService.findGeoCodeAddres(dto);
-                if (isAdded() && getActivity() != null) {
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (responseList != null && !responseList.isEmpty()) {
-                                GeoPoint geoPoint = new GeoPoint(responseList.get(0).getLatitude(), responseList.get(0).getLongitude());
-                                addMarker(geoPoint, responseList.get(0).getName(), responseList.get(0).getDisplayName());
-                            }
-                        }
-                    });
+        executor.execute(() -> {
+            List<Coleta> listaPontosColeta = coletaService.findAll();
+            if(!listaPontosColeta.isEmpty()) {
+                for (Coleta coleta : listaPontosColeta.stream().filter(coleta -> coleta.getTipoColeta() == ColetaType.PONTO_COLETA).collect(Collectors.toList())) {
+                    if (coleta.getLatitude() == 0 || coleta.getLongitude() == 0) {
+                        renderPinByAddress(coleta);
+                    } else {
+                        addMarker(new GeoPoint(coleta.getLatitude(), coleta.getLongitude()), coleta.getQueColeta(), coleta.getDescricao());
+                    }
                 }
             }
         });
+
     }
+
+    private void renderPinByAddress(Coleta coleta) {
+        GeoLocationDto dto = new GeoLocationDto();
+        dto.setStreetAddress(coleta.getLogradouro().replaceAll(" ", "+"));
+        dto.setCity(coleta.getLocalidade().replaceAll(" ", "+"));
+        dto.setState(coleta.getUf().replaceAll(" ", "+"));
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            List<GeoLocationResponseDto> responseList = geoLocationService.findGeoCodeAddres(dto);
+            if (isAdded() && getActivity() != null) {
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (responseList != null && !responseList.isEmpty()) {
+                            GeoPoint geoPoint = new GeoPoint(responseList.get(0).getLatitude(), responseList.get(0).getLongitude());
+                            addMarker(geoPoint, coleta.getQueColeta(), coleta.getDescricao());
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 
     private void addMyLocation() {
         myLocationOverlay.runOnFirstFix(new Runnable() {

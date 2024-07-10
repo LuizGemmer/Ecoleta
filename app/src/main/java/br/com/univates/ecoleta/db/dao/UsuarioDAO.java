@@ -26,6 +26,9 @@ public class UsuarioDAO {
     }
 
     public void salvar(Usuario usuario) {
+        if(usuario.getId() == null)
+            usuario.setId(getNextId());
+
         databaseReference.child(usuario.getId()).setValue(usuario);
     }
 

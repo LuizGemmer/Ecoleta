@@ -13,7 +13,6 @@ public class Usuario implements Serializable {
     public String nome;
     public String email;
     public TipoLocalizacaoType tipoLocalizacao;
-    public List<TipoMaterial> listaTipoMateriais;
     public double longitude;
     public double latitude;
     public String cep;
@@ -47,15 +46,6 @@ public class Usuario implements Serializable {
     public void setTipoLocalizacao(TipoLocalizacaoType tipoLocalizacao) {
         this.tipoLocalizacao = tipoLocalizacao;
     }
-
-    public List<TipoMaterial> getListaTipoMateriais() {
-        return listaTipoMateriais;
-    }
-
-    public void setListaTipoMateriais(List<TipoMaterial> listaTipoMateriais) {
-        this.listaTipoMateriais = listaTipoMateriais;
-    }
-
     public double getLongitude() {
         return longitude;
     }

@@ -16,15 +16,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import br.com.univates.ecoleta.db.entity.Usuario;
 import br.com.univates.ecoleta.db.service.UsuarioService;
-import br.com.univates.ecoleta.layout.NewPontoColetaFinal;
 
 public class MainActivity extends AppCompatActivity {
 
