@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -104,7 +105,6 @@ public class NewPontoColeta extends Fragment {
         });
     }
 
-
     private void requestCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -125,10 +125,7 @@ public class NewPontoColeta extends Fragment {
         }
         fusedLocationClient.requestLocationUpdates(locationRequest, new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
+            public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     goToNextScreen(location.getLatitude(), location.getLongitude());
                 }
@@ -181,13 +178,7 @@ public class NewPontoColeta extends Fragment {
         args.putSerializable("pontoColeta", pontoColeta);
         fragment.setArguments(args);
 
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentPrincipal, fragment);
-        if (true) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
+        EcoletaUtils.replaceFragment(NewPontoColetaFinal.class, true, requireActivity().getSupportFragmentManager());
     }
 
     private void clearEditText() {

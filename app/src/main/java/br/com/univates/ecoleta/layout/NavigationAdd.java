@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Objects;
+
+import br.com.univates.ecoleta.MainActivityPrincipal;
 import br.com.univates.ecoleta.R;
 import br.com.univates.ecoleta.utils.EcoletaUtils;
 
@@ -37,22 +40,12 @@ public class NavigationAdd extends Fragment {
         View view = inflater.inflate(R.layout.navigation_add, container, false);
 
         view.findViewById(R.id.btnCadPontoColeta).setOnClickListener(v -> {
-            replaceFragment(new NewPontoColeta(),true);
+            EcoletaUtils.replaceFragment(NewPontoColeta.class, true, requireActivity().getSupportFragmentManager());
         });
 
         view.findViewById(R.id.btnSolicitarColeta).setOnClickListener(v -> {});
         
         return view;
-    }
-
-    private void replaceFragment(Fragment fragment, boolean addToBackStack) {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentPrincipal, fragment);
-        if (addToBackStack) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
     }
 
 }

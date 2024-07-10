@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_container"
+    android:id="@+id/fragment_container_add"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     tools:context=".layout.NavigationAdd">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="413dp"
-        android:layout_height="68dp"
-        android:fontFamily="@font/ubuntu_bold"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/pergunta_cadastro"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSolicitarColeta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.662" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnSolicitarColeta"
-        android:layout_width="258dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="184dp"
-        android:text="@string/solicitar_coleta"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorLink="@color/green"
-        android:textSize="20sp"
-        app:icon="@drawable/location_dot_solid"
-        app:iconPadding="10dp"
-        app:iconSize="25dp"
-        app:iconTint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="413dp"
+            android:layout_height="68dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/pergunta_cadastro"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSolicitarColeta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.662" />
 
-    <Button
-        android:id="@+id/btnCadPontoColeta"
-        android:layout_width="258dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="316dp"
-        android:text="@string/ponto_coleta"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorLink="@color/green"
-        android:textSize="20sp"
-        app:icon="@drawable/location_dot_solid"
-        app:iconPadding="10dp"
-        app:iconSize="25dp"
-        app:iconTint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btnSolicitarColeta"
+            android:layout_width="258dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="184dp"
+            android:text="@string/solicitar_coleta"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorLink="@color/green"
+            android:textSize="20sp"
+            app:icon="@drawable/location_dot_solid"
+            app:iconPadding="10dp"
+            app:iconSize="25dp"
+            app:iconTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        <Button
+            android:id="@+id/btnCadPontoColeta"
+            android:layout_width="258dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="316dp"
+            android:text="@string/ponto_coleta"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorLink="@color/green"
+            android:textSize="20sp"
+            app:icon="@drawable/location_dot_solid"
+            app:iconPadding="10dp"
+            app:iconSize="25dp"
+            app:iconTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

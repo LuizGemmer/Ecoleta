@@ -15,7 +15,6 @@
         android:id="@+id/locationText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/localizacao"
         android:gravity="center"
         android:textSize="18sp"
         android:textColor="@android:color/black"/>

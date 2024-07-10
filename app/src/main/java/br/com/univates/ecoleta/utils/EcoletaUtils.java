@@ -5,14 +5,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import br.com.univates.ecoleta.R;
+import br.com.univates.ecoleta.layout.NewPontoColetaFinal;
 
 public class EcoletaUtils {
 
-    public static void replaceFragment(Fragment fragment, int fragmentPrincipal, FragmentManager parentFragmentManager) {
-        FragmentTransaction transaction = parentFragmentManager.beginTransaction();
-        // ao adicionar uma nova tela sempre chamar o fragmentPrincipal da MainActivityPrincipal
-        transaction.replace(R.id.fragmentPrincipal, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    public static <T extends Fragment> void replaceFragment(Class<T> minhaClasse, boolean addToBackStack, FragmentManager supportFragmentManager) {
+        FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+
+        try {
+            Fragment fragment = minhaClasse.newInstance();
+            transaction.replace(R.id.fragmentPrincipal, fragment);
+            if (addToBackStack) {
+                transaction.addToBackStack(null);
+            }
+            transaction.commit();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

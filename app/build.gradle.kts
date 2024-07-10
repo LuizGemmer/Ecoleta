@@ -60,4 +60,11 @@ dependencies {
     implementation (libs.gson.v288)
     implementation (libs.maskara)
     implementation (libs.material.v1120)
+
+    implementation (libs.camera.core)
+    implementation (libs.camera.camera2)
+    implementation (libs.camera.lifecycle)
+    implementation (libs.camera.view)
+    implementation (libs.camera.extensions)
+    implementation (libs.guava)
 }
